@@ -1,0 +1,6 @@
+  const { isPending } = useDataFetching(); // Use useDataFetching hook
+
+  
+  if (isPending) {
+    return <Loader1 />
+  }

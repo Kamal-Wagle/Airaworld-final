@@ -1,0 +1,72 @@
+* {
+    list-style-type: none;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.search-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.category-section {
+    display: grid;
+    gap: 20px;
+}
+
+.search-box {
+    border: 1px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+.job-search-box {
+    border: 1px solid black;
+    /* Optionally keep border for job search box */
+}
+
+.category-box {
+    border: 1px solid black;
+    padding: 20px;
+}
+
+.journal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Responsive Text */
+@media (max-width: 768px) {
+    * {
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+        /* Example: Adjust font size for smaller screens */
+    }
+
+    .search-section {
+        grid-template-columns: 1fr;
+    }
+
+    .journal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-box,
+    .search-box {
+        border: none;
+        /* Remove border on smaller screens */
+    }
+
+    .margina {
+        margin-left: 0;
+        /* Remove specific margin on smaller screens */
+    }
+}
