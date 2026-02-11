@@ -8,7 +8,8 @@ import {
   Chip,
   Stack,
   Divider,
-  Avatar
+  Avatar,
+  Grid
 } from "@mui/material";
 import { healthWorkBlogs } from "../MainPages/Data.js";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';

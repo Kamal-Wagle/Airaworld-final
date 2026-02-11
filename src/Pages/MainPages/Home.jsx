@@ -208,7 +208,7 @@ const Home = () => {
                 image={project.image}
                 date={project.date}
                 category="Project"
-                onClick={() => navigate(`/ projects / ${project.id} `)}
+                onClick={() => navigate(`/projects/${project.id}`)}
                 delay={index * 0.1}
               />
             </Grid>
@@ -239,7 +239,7 @@ const Home = () => {
                   image={blog.image}
                   date={blog.date}
                   category="Blog"
-                  onClick={() => navigate(`/ blogs / ${blog.id} `)}
+                  onClick={() => navigate(`/blogs/${blog.id}`)}
                   delay={index * 0.1}
                 />
               </Grid>
