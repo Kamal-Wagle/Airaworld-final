@@ -127,8 +127,17 @@ const Navbar = (props) => {
                 </Typography>
               </Box>
 
+              {/* Mobile Logo */}
+              <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
+                <img
+                  src="/Logo2.png"
+                  alt="AIRA Logo"
+                  style={{ height: '40px', width: 'auto' }}
+                />
+              </Box>
+
               {/* Mobile Menu Icon */}
-              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'flex-end' }}>
                 <IconButton
                   size="large"
                   aria-label="open drawer"
@@ -139,15 +148,6 @@ const Navbar = (props) => {
                 >
                   <MenuIcon />
                 </IconButton>
-              </Box>
-
-              {/* Mobile Logo */}
-              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'center', alignItems: 'center' }}>
-                <img
-                  src="/Logo2.png"
-                  alt="AIRA Logo"
-                  style={{ height: '40px', width: 'auto' }}
-                />
               </Box>
 
               {/* Desktop Menu */}

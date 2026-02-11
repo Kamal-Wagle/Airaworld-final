@@ -1,5 +1,19 @@
 /* Global styles are now managed by Material UI Theme */
-html, body {
+
+* {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%234A90E2" opacity="0.3"/><circle cx="12" cy="12" r="3" fill="%234A90E2"/></svg>') 12 12, auto;
+}
+
+a,
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%234A90E2" opacity="0.5"/><circle cx="12" cy="12" r="4" fill="%234A90E2"/></svg>') 12 12, pointer !important;
+}
+
+html,
+body {
   width: 100%;
   margin: 0;
   padding: 0;
