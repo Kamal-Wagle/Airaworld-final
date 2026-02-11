@@ -1,63 +1,46 @@
-import { Box, Typography } from "@mui/material";
 import React from "react";
-import Loader1 from "../../compoment/Frequently/Loader1";
-import useDataFetching from "../../compoment/Frequently/useDataFetching";
-import "./ReserchTeam.css";
+import { Typography, Container, Grid, Box } from "@mui/material";
 import { TeamMembers } from "./Data.js";
+import TeamCard from "../../compoment/Team/TeamCard";
+import { motion } from "framer-motion";
 
 const ResearchTeam = () => {
-  const { isPending } = useDataFetching(); // Use useDataFetching hook
-
-  // Render Loader1 if data is pending
-  if (isPending) {
-    return <Loader1 />;
-  }
-
-  const TeamMemberData = TeamMembers;
-
-  const handleImageError = (e) => {
-    e.target.onerror = null; // Prevent infinite loop in case fallback image also fails
-    e.target.src =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"; // Path to your fallback image
-  };
+  const formatMember = (member) => ({
+    name: member.Name,
+    role: member.Post,
+    qualification: member.Qualification,
+    image: member.Image,
+    bio: member.Brief,
+    socialLinks: [] // Add icons if available in data in future
+  });
 
   return (
-    <>
-      <Typography variant="h4" color="initial" sx={{ textAlign: 'center' }}>
-        Research Team
-      </Typography>
+    <Box sx={{ py: 8 }}>
+      <Container maxWidth="md" sx={{ mb: 8, textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Typography variant="h3" gutterBottom fontWeight="bold">
+            Research Team
+          </Typography>
+          <Typography variant="h6" sx={{ opacity: 0.8, color: 'text.secondary' }}>
+            Innovating for a better tomorrow through rigorous research.
+          </Typography>
+        </motion.div>
+      </Container>
 
-      <section className="team-section" style={{ display: "flex", flexWrap: "wrap" }}>
-        {TeamMemberData.map((member) => (
-          <Box
-            key={member.id}
-            className="Boxa"
-            style={{ flex: "1 0 300px", margin: "10px", maxWidth: "300px" }}
-          >
-            <img
-              src={member.Image}
-              alt={member.Name}
-              className="Admin-Image"
-              style={{ width: "60%", height: "60%" }}
-              onError={handleImageError}
-            />
-            <Typography color="initial" variant="h6">
-              Name: {member.Name}
-            </Typography>
-            <Typography color="initial" variant="subtitle1">
-              Post: {member.Post}
-            </Typography>
-            <Typography color="initial" variant="body1">
-              Qualification: {member.Qualification}
-            </Typography>
-            {/* Additional details can be added here */}
-            <Box className="Boxb" sx={{ flex: "1 0 300px", margin: "10px", maxWidth: "300px", justifyContent:"center" , alignContent:"center" }}>
-              Brief: {member.Brief}
-            </Box>
-          </Box>
-        ))}
-      </section>
-    </>
+      <Container maxWidth="lg">
+        <Grid container spacing={4} justifyContent="center">
+          {TeamMembers.map((member, index) => (
+            <Grid item xs={12} sm={6} md={4} key={member.id}>
+              <TeamCard {...formatMember(member)} delay={index * 0.1} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

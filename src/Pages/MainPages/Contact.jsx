@@ -1,12 +1,14 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
-  return (
-    <div>
-       <Typography variant="h4" color="initial" sx={{display:"flex" , justifyContent:"center" , padding:"200px"}}>Contact Page</Typography>
-    </div>
-  )
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/getintouch');
+  }, [navigate]);
+
+  return null;
 }
 
-export default Contact
+export default Contact;

@@ -1,181 +1,76 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
-import "./ReserchTeam.css"; // Corrected CSS import path
-import { CEO, AdminMembers } from "./Data.js"; // Assuming correct import path to Data.js
-import useDataFetching from "../../compoment/Frequently/useDataFetching.js";
-import Loader1 from "../../compoment/Frequently/Loader1.jsx";
-import LinkedInIcon from "@mui/icons-material/LinkedIn"; // Import LinkedInIcon from Material-UI icons
+import { Box, Typography, Container, Grid } from "@mui/material";
+import { CEO, AdminMembers } from "./Data.js";
+import TeamCard from "../../compoment/Team/TeamCard";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { motion } from "framer-motion";
 
 const AdminTeam = () => {
-  const { isPending } = useDataFetching(); // Use useDataFetching hook
-
-  // Render Loader1 if data is pending
-  if (isPending) {
-    return <Loader1 />;
-  }
-
-  const handleImageError = (e) => {
-    e.target.onerror = null; // Prevent infinite loop in case fallback image also fails
-    e.target.src =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"; // Placeholder URL for error image
-  };
+  // Helper to format data for TeamCard
+  const formatMember = (member) => ({
+    name: member.name,
+    role: member.post,
+    qualification: member.Qualification,
+    image: member.Image || member.photoUrl,
+    bio: member.introduction,
+    socialLinks: [
+      { icon: <LinkedInIcon />, url: "https://www.linkedin.com/company/axon-infotech-research-academy" } // Placeholder link, utilize member specific if available
+    ]
+  });
 
   return (
-    <>
-      <section
-        className="team-section"
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-      >
-        {CEO.map((ceo) => (
-          <Box
-            key={ceo.id}
-            className="Boxa"
-            style={{
-              flex: "1 0 300px",
-              margin: "20px",
-              padding: "20px",
-              maxWidth: "300px",
-              height: "380px",
-              textAlign: "center", // Center align content inside each Box
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center", // Center align items horizontally
-            }}
-          >
-            <img
-              src={ceo.Image}
-              alt={ceo.name.toLowerCase()} // Ensure to use lowercase "name"
-              className="Admin-Image"
-              style={{ width: "60%", height: "60%", marginBottom: "10px" }}
-              onError={handleImageError}
-            />
-            <Typography color="initial" variant="h6" fontFamily="monospace">
-              {ceo.name}
-            </Typography>
-            <Typography
-              color="initial"
-              fontFamily="monospace"
-            >
-              Post: {ceo.post}
-            </Typography>
-            <Typography
-              color="initial"
-              variant="body1"
-              sx={{ fontSize: "", paddingLeft: "20px" }}
-              fontFamily="monospace"
-            >
-              {ceo.Qualification}
-            </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<LinkedInIcon />}
-              component="a"
-              href="https://np.linkedin.com/in/cmwagle"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{ mt: 2 }} // Adds margin-top to the button for spacing
-            >
-              LinkedIn
-            </Button>
-          </Box>
-        ))}
-      </section>
-
-      <Typography
-        variant="h4"
-        color="initial"
-        sx={{ textAlign: "center", marginTop: "60px" }}
-      >
-        Advisor Team
-      </Typography>
-
-      <section
-        className="team-section"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          padding: "40px",
-          margin: "40px",
-        }}
-      >
-        {Array.isArray(AdminMembers) && AdminMembers.length > 0 ? (
-          AdminMembers.map((member) => (
-            <Box
-              key={member.id}
-              className="Boxa"
-              style={{
-                flex: "1 0 300px",
-                margin: "60px",
-                maxWidth: "300px",
-                padding: "20px",
-                height: "380px",
-                textAlign: "",
-              }}
-            >
-              <img
-                src={member.photoUrl} // Assuming photoUrl is correctly defined
-                alt={member.name} // Changed to lowercase "name"
-                className="Admin-Image"
-                style={{ width: "60%", height: "60%" }}
-                onError={handleImageError}
-              />
-
-              <Typography color="initial" variant="h6">
-                Name: {member.name} {/* Changed to lower case "name" */}
-              </Typography>
-              <Typography color="initial" variant="subtitle1">
-                {member.post} {/* Changed to lower case "post" */}
-              </Typography>
-              <Typography
-                color="initial"
-                variant="body1"
-                sx={{ padding: "", fontSize: "small" }}
-              >
-                Qualification: {member.Qualification}
-                {/* Assuming introduction contains Qualification information */}
-              </Typography>
-
-              {/* Additional details can be added here */}
-
-              <Box
-                className="Boxb"
-                sx={{
-                  flex: "1 0 300px",
-                  margin: "10px",
-                  maxWidth: "300px",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  textAlign: "center", // Optional: Centers text inside the Box
-                }}
-              >
-                <Typography variant="body1" gutterBottom>
-                  Brief: {member.introduction}
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<LinkedInIcon />}
-                  component="a"
-                  href="https://www.linkedin.com/in/example-profile"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ mt: 2 }} // Adds margin-top to the button for spacing
-                >
-                  LinkedIn
-                </Button>
-              </Box>
-            </Box>
-          ))
-        ) : (
-          <Typography variant="body1" color="initial">
-            No team members found.
+    <Box sx={{ py: 8 }}>
+      <Container maxWidth="md" sx={{ mb: 8, textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Typography variant="h3" gutterBottom fontWeight="bold">
+            Administrative Team
           </Typography>
-        )}
-      </section>
-    </>
+          <Typography variant="h6" sx={{ opacity: 0.8, color: 'text.secondary' }}>
+            The visionaries leading AIRA towards excellence.
+          </Typography>
+        </motion.div>
+      </Container>
+
+      <Container maxWidth="lg">
+        {/* CEO Section */}
+        <Box sx={{ mb: 10 }}>
+          <Typography variant="h4" gutterBottom fontWeight="bold" textAlign="center" sx={{ mb: 6 }}>
+            Leadership
+          </Typography>
+          <Grid container spacing={4} justifyContent="center">
+            {CEO.map((ceo, index) => (
+              <Grid item xs={12} sm={6} md={4} key={ceo.id}>
+                <TeamCard {...formatMember(ceo)} delay={index * 0.1} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Advisor Team */}
+        <Box>
+          <Typography variant="h4" gutterBottom fontWeight="bold" textAlign="center" sx={{ mb: 6 }}>
+            Advisory Board
+          </Typography>
+          <Grid container spacing={4} justifyContent="center">
+            {Array.isArray(AdminMembers) && AdminMembers.length > 0 ? (
+              AdminMembers.map((member, index) => (
+                <Grid item xs={12} sm={6} md={4} key={member.id}>
+                  <TeamCard {...formatMember(member)} delay={index * 0.1} />
+                </Grid>
+              ))
+            ) : (
+              <Grid item xs={12}>
+                <Typography align="center">No team members found.</Typography>
+              </Grid>
+            )}
+          </Grid>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 

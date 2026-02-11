@@ -1,83 +1,128 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { Typography, Box, Link } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Typography,
+  Box,
+  Container,
+  Button,
+  Chip,
+  Stack,
+  Divider,
+  Avatar
+} from "@mui/material";
 import { healthWorkBlogs } from "../MainPages/Data.js";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import PersonIcon from '@mui/icons-material/Person';
+import LinkIcon from '@mui/icons-material/Link';
+import { motion } from "framer-motion";
+import SEO from "../../compoment/common/SEO";
 
 const BlogsDetails = () => {
-  // Extract the blog ID from the URL
   const { id } = useParams();
-
-  // Find the blog post with the matching ID
+  const navigate = useNavigate();
   const selectedBlog = healthWorkBlogs.find((blog) => blog.id === parseInt(id));
 
-  // Function to render paragraphs with Typography component
-  const renderContent = () => {
-    return selectedBlog.content.map((paragraph, index) => (
-      <Typography key={index} variant="h6" paragraph>
-        {paragraph}
-      </Typography>
-    ));
-  };
+  if (!selectedBlog) {
+    return (
+      <Container sx={{ py: 10, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom>Article Not Found</Typography>
+        <Button variant="contained" onClick={() => navigate('/blogs')}>Back to Blogs</Button>
+      </Container>
+    );
+  }
 
-  // Render the details of the selected blog post
   return (
-    <Box p={3} sx={{ textAlign: "justify" }}>
-      <Box mb={2}>
-        <Typography
-          variant="h3"
-          gutterBottom
-          style={{
-            fontSize: "2em", // Example of using em unit for font size
-            maxWidth: "100%", // Ensures text doesn't overflow its container
-            wordWrap: "break-word", // Allows text to wrap if it exceeds container width
-          }}
+    <Box sx={{ py: 8 }}>
+      <SEO
+        title={selectedBlog.title}
+        description={selectedBlog.content[0]}
+        keywords={`${selectedBlog.title}, Health Blog, ${selectedBlog.tags ? selectedBlog.tags.join(', ') : 'Health Research'}`}
+        image={selectedBlog.image}
+        url={`/blogs/${id}`}
+      />
+      <Container maxWidth="md">
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/blogs')}
+          sx={{ mb: 4 }}
         >
-          {selectedBlog.title}
-        </Typography>
-      </Box>
+          Back to Articles
+        </Button>
 
-      <Typography variant="subtitle1" gutterBottom>
-        <strong>Author:</strong> {selectedBlog.author}
-      </Typography>
-      <Typography variant="subtitle2" gutterBottom>
-        <strong>Date:</strong> {selectedBlog.date}
-      </Typography>
-      <Box mb={2}>
-        <img
-          src={selectedBlog.image}
-          alt={selectedBlog.title}
-          style={{
-            width: "100%",
-            height: "900px",
-            padding: "10%",
-            borderRadius: "8px",
-          }}
-        />
-      </Box>
-      {/* Render content paragraphs */}
-      {renderContent()}
-      <Typography variant="subtitle2" gutterBottom>
-        <strong>Category:</strong> {selectedBlog.category}
-      </Typography>
-      <Typography variant="subtitle2" gutterBottom>
-        <strong>Tags:</strong> {selectedBlog.tags.join(", ")}
-      </Typography>
-      <Typography variant="subtitle2" gutterBottom>
-        <strong>Source:</strong>{" "}
-        <Link
-          href={selectedBlog.source}
-          target="_blank"
-          rel="noopener noreferrer"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          Source Link
-        </Link>
-      </Typography>
-      {/* Add a link to go back to the blogs page */}
-      <Box mt={3}>
-        <Link href="/blogs" variant="body2">
-          Back to Blogs
-        </Link>
-      </Box>
+          <Typography variant="overline" color="secondary" fontWeight="bold">
+            {selectedBlog.category}
+          </Typography>
+          <Typography variant="h3" component="h1" gutterBottom fontWeight="bold" sx={{ mb: 4 }}>
+            {selectedBlog.title}
+          </Typography>
+
+          <Stack direction="row" spacing={4} alignItems="center" sx={{ mb: 6, color: 'text.secondary' }}>
+            <Box display="flex" alignItems="center" gap={1}>
+              <PersonIcon fontSize="small" />
+              <Typography variant="subtitle2">{selectedBlog.author || "AIRA Team"}</Typography>
+            </Box>
+            <Box display="flex" alignItems="center" gap={1}>
+              <CalendarTodayIcon fontSize="small" />
+              <Typography variant="subtitle2">{selectedBlog.date}</Typography>
+            </Box>
+          </Stack>
+
+          <Box
+            component="img"
+            src={selectedBlog.image}
+            alt={selectedBlog.title}
+            sx={{
+              width: '100%',
+              borderRadius: 4,
+              boxShadow: 3,
+              mb: 6,
+              maxHeight: '500px',
+              objectFit: 'cover'
+            }}
+          />
+
+          <Box sx={{ typography: 'body1', fontSize: '1.1rem', lineHeight: 1.8 }}>
+            {selectedBlog.content.map((paragraph, index) => (
+              <Typography key={index} paragraph sx={{ mb: 3 }}>
+                {paragraph}
+              </Typography>
+            ))}
+          </Box>
+
+          <Divider sx={{ my: 6 }} />
+
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12} md={8}>
+              {selectedBlog.tags && selectedBlog.tags.length > 0 && (
+                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                  {selectedBlog.tags.map((tag, index) => (
+                    <Chip key={index} label={tag} variant="outlined" />
+                  ))}
+                </Stack>
+              )}
+            </Grid>
+            <Grid item xs={12} md={4} sx={{ textAlign: { md: 'right' } }}>
+              {selectedBlog.source && (
+                <Button
+                  variant="text"
+                  endIcon={<LinkIcon />}
+                  href={selectedBlog.source}
+                  target="_blank"
+                >
+                  Read Original Source
+                </Button>
+              )}
+            </Grid>
+          </Grid>
+
+        </motion.div>
+      </Container>
     </Box>
   );
 };

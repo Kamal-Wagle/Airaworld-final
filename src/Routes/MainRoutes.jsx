@@ -14,6 +14,7 @@ import Board from "../Pages/MainPages/Board.jsx";
 import AdminTeam from "../Pages/MainPages/AdminTeam.jsx";
 import ResearchTeam from "../Pages/MainPages/ResearchTeam.jsx";
 import DeveloperTeam from "../Pages/MainPages/DeveloperTeam.jsx";
+import Team from "../Pages/MainPages/Team.jsx";
 import EcenterLearning from "../Pages/MainPages/EcenterLearning.jsx";
 import ProjectDetails from "../Pages/Other/ProjectDetails.jsx";
 import SearchSite from "../Pages/MainPages/SearchSite.jsx";
@@ -77,6 +78,10 @@ const MainRoutes = [
       {
         path: "developer-team",
         element: <DeveloperTeam />,
+      },
+      {
+        path: "team",
+        element: <Team />,
       },
       {
         path: "elearning-center",

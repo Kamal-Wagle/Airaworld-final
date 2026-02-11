@@ -1,76 +1,7 @@
-* {
-  box-sizing: border-box;
-}
-
+/* Global styles are now managed by Material UI Theme */
 html, body {
   width: 100%;
-  overflow-x: hidden;
   margin: 0;
   padding: 0;
-  background: rgb(237,241,226);
-}
-
-.Box-Color {
-  background-color: rgb(213, 216, 195);
-}
-
-.Boxa {
-  justify-content: center;
-  border: 1px solid #ddddddc9;
-  border-radius: 8px;
-  padding: 16px;
-  max-width: 260px;
-  margin: 20px;
-  text-align: center;
-  transition: border-color 0.3s ease, transform 0.3s ease;
-  background-color: rgb(213, 216, 195);
-}
-
-.Admin-Image {
-  border-radius: 10px;
-  width: 100%;
-  height: auto;
-  margin-bottom: 16px;
-  transition: transform 0.3s ease;
-}
-
-.item-scroll,
-.item-scroll::before {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.item-scroll {
-  width: 20px;
-  height: 30px;
-  border: 2px solid rgb(28, 15, 15);
-  border-radius: 25px;
-  cursor: pointer;
-}
-
-.item-scroll::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: rgb(237,241,226);
-  margin-left: -4px;
-  top: 5px;
-  border-radius: 50%;
-  animation: 1.5s scroll cubic-bezier(0.65, -0.55, 0.25, 1.5) infinite;
-}
-
-@keyframes scroll {
-  0% {
-    opacity: 0;
-    transform: translateY(0) scale(0);
-  }
-  10% {
-    opacity: 1;
-    transform: scale(0.5);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(10px) scale(0.5);
-  }
+  overflow-x: hidden;
 }

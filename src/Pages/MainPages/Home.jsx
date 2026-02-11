@@ -1,605 +1,271 @@
-import React from "react";
-import SimpleSlider from "../../compoment/Frequently/SimpleSlider";
-import { Container, Typography, Button, Box } from "@mui/material";
-import { healthWorkBlogs, projectsData } from "./Data.js";
-import { useNavigate } from "react-router-dom";
-import useDataFetching from "../../compoment/Frequently/useDataFetching.js";
-import Loader1 from "../../compoment/Frequently/Loader1.jsx";
-import "./Home.css";
+import React, { useEffect } from "react";
 import {
-  fadeLeftWithOptions,
-  fadeRightWithOptions,
-} from "../../compoment/Frequently/aosAnimations.js.js";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import YouTubeIcon from "@mui/icons-material/YouTube";
+  Container,
+  Typography,
+  Grid,
+  Button,
+  Box,
+  Card,
+  CardContent,
+} from "@mui/material";
+import { healthWorkBlogs, projectsData } from './Data.js';
+import { useNavigate } from "react-router-dom";
+import ServiceCard from "../../compoment/Home/ServiceCard";
+import ContentCard from "../../compoment/Home/ContentCard";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import ScienceIcon from '@mui/icons-material/Science';
+import CodeIcon from '@mui/icons-material/Code';
+import BuildIcon from '@mui/icons-material/Build';
+import SchoolIcon from '@mui/icons-material/School';
+import WorkIcon from '@mui/icons-material/Work';
+import EventIcon from '@mui/icons-material/Event';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import SEO from "../../compoment/common/SEO";
 
 const Home = () => {
-  const { isPending } = useDataFetching(); // Use useDataFetching hook
+  const navigate = useNavigate();
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ threshold: 0.2 });
 
-  const navigate = useNavigate(); // Move useNavigate outside of the conditional rendering block
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
 
-  // Render Loader1 if data is pending
-  if (isPending) {
-    return <Loader1 />;
-  }
-  const BlogData = healthWorkBlogs;
-  const ProjectData = projectsData;
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
+  const services = [
+    { title: 'Research & Innovation', description: 'Cutting-edge research addressing real-world challenges.', icon: <ScienceIcon fontSize="large" /> },
+    { title: 'Software Development', description: 'Comprehensive solutions from concept to deployment.', icon: <CodeIcon fontSize="large" /> },
+    { title: 'Tool Development', description: 'Robust tools tailored for research and industry needs.', icon: <BuildIcon fontSize="large" /> },
+    { title: 'eLearning Services', description: 'Customized, interactive courses for professional growth.', icon: <SchoolIcon fontSize="large" /> },
+    { title: 'Professional Training', description: 'Expert-led training in data science, GIS, and more.', icon: <WorkIcon fontSize="large" /> },
+    { title: 'Event Organization', description: 'Seamless management of workshops and conferences.', icon: <EventIcon fontSize="large" /> },
+  ];
+
   return (
-    <>
-      <section
-        style={{
-          // backgroundColor: "#f5f5f5",
-          padding: "50px 0",
-        }}
-      >
-        {/* Slider */}
-        <SimpleSlider />
-
-        {/* About Us Section */}
-        <div {...fadeLeftWithOptions()}>
-          <section
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              backgroundColor: "rgb(237,241,226)",
-              borderRadius: "8px",
-              padding: "30px",
-              maxWidth: "", // Added max-width for responsiveness
-              margin: "", // Center align the section
-            }}
-          >
-            <Typography variant="h4" color="initial">
-              About Us
-            </Typography>
-
-            <section
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start", // Align items to flex-start
-                width: "90%",
-                marginTop: "20px",
-                paddingL: "20px",
-                flexWrap: "wrap",
-              }}
-            >
-              <Box
-                sx={{
-                  width: { xs: "980%", md: "45%" },
-                  marginBottom: "20px", // Add margin-bottom for spacing
-                }}
-              >
-                {" "}
-                <div {...fadeRightWithOptions()}>
-                  <Typography
-                    variant="body1"
-                    color="initial"
-                    style={{ textAlign: "justify" }}
-                  >
-                    Axon Infotech Research Academy is operated by highly
-                    professional individuals. Initially established as Rara
-                    Medical Hall in Gundu Bhaktapur in 2017 AD, the organization
-                    later relocated to Lalitpur District and evolved into Rara
-                    Health Care and Research Centre in 2020. Throughout this
-                    transition, it has been dedicated to providing various
-                    clinical and non-clinical health services to the entire
-                    community, which consists of around 30,000 people, while
-                    also engaging in research-based innovations. Amidst the
-                    challenges posed by the COVID-19 pandemic, it was further
-                    upgraded into a 15-bed community hospital, offering curative
-                    services. Ultimately, it underwent a name change to Axon
-                    Infotech Research Academy, operating under the brand name
-                    "Airaworld," focusing primarily on research-based
-                    innovations in healthcare technology and the field of data
-                    sciences.
-                  </Typography>
-                </div>
-              </Box>
-
-              <Box
-                sx={{
-                  width: { xs: "100%", md: "45%" },
-                  marginBottom: "20px", // Add margin-bottom for spacing
-                }}
-              >
-                <div {...fadeLeftWithOptions()}>
-                  <img
-                    src="/Images/AboutUs.jpeg"
-                    alt=""
-                    style={{
-                      width: "90%",
-                      borderRadius: "8px",
-                      height: "300px",
-                      background: "cover",
-                    }}
-                  />
-                </div>
-              </Box>
-            </section>
-          </section>
-        </div>
-
-        {/* Service Section */}
-        <section
-          style={{
-            maxWidth: "", // Set max-width for responsiveness
-            margin: "20px",
-            backgroundColor: "rgb(237,241,226)", // Center align the section
-          }}
-        >
-          <Typography
-            variant="h4"
-            color="initial"
-            align="center"
-            sx={{ padding: "20px" }}
-          >
-            Our Services
-          </Typography>
-
-          <div {...fadeLeftWithOptions()}>
-            <p sx={{ textAlign: "justify", padding: "10px 20px" }}>
-              At Axon Infotech Research Academy, we are committed to pushing the
-              boundaries of healthcare through groundbreaking research and
-              innovation. Our team of experts is dedicated to exploring the
-              latest advancements in medical technology and data sciences to
-              revolutionize patient care and improve health outcomes.
-            </p>
-          </div>
-
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gap: "20px",
-              padding: "0 20px",
-            }}
-          >
-            {/* Services Box 1 */}
-            <Box className="aaaa"
-              sx={{
-                margin: "20px",
-                padding: "20px",
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 40px)",
-                  md: "calc(33.33% - 40px)",
-                },
-                backgroundColor: "rgb(213, 216, 195)",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                minWidth: "250px", // Set min-width to ensure a minimum width for service boxes
-              }}
-              
-            >
-              <div {...fadeLeftWithOptions()}>
-                <Typography
-                  variant="h6"
-                  color="initial"
-                  sx={{ fontWeight: "bold" }}
-                >
-                   Research & Innovation
-                </Typography>
-                <p>
-                  Our team conducts cutting-edge research and fosters innovation
-                  to address real-world challenges. We collaborate with industry
-                  experts and academic institutions to drive impactful projects.
-                </p>
-              </div>
-            </Box>
-
-            {/* Services Box 2 */}
-            <Box
-              sx={{
-                margin: "20px",
-                padding: "20px",
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 40px)",
-                  md: "calc(33.33% - 40px)",
-                },
-          backgroundColor: "rgb(213, 216, 195)",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                minWidth: "250px", // Set min-width to ensure a minimum width for service boxes
-              }}
-            >
-              <div {...fadeRightWithOptions()}>
-                <Typography
-                  variant="h6"
-                  color="initial"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Software Development
-                </Typography>
-                <p>
-                  We provide comprehensive software development services, from
-                  initial concept to deployment. Our solutions are designed to
-                  enhance efficiency and productivity across various sectors.
-                </p>
-              </div>
-            </Box>
-
-            {/* Services Box 3 */}
-            <Box
-              sx={{
-                margin: "20px",
-                padding: "20px",
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 40px)",
-                  md: "calc(33.33% - 40px)",
-                },
-          backgroundColor: "rgb(213, 216, 195)",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                minWidth: "250px", // Set min-width to ensure a minimum width for service boxes
-              }}
-            >
-              <div {...fadeLeftWithOptions()}>
-                <Typography
-                  variant="h6"
-                  color="initial"
-                  sx={{ fontWeight: "bold" }}
-                >
-                   Tool Development & Validation
-                </Typography>
-                <p>
-                  We specialize in developing and validating robust tools
-                  tailored to meet specific research and industry needs. Our
-                  tools undergo rigorous testing to ensure accuracy and
-                  reliability.
-                </p>
-              </div>
-            </Box>
-
-            {/* Services Box 4 */}
-            <Box
-              sx={{
-                margin: "20px",
-                padding: "20px",
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 40px)",
-                  md: "calc(33.33% - 40px)",
-                },
-          backgroundColor: "rgb(213, 216, 195)",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                minWidth: "250px", // Set min-width to ensure a minimum width for service boxes
-              }}
-            >
-              <div {...fadeLeftWithOptions()}>
-                <Typography
-                  variant="h6"
-                  color="initial"
-                  sx={{ fontWeight: "bold" }}
-                >
-                   eLearning Services
-                </Typography>
-                <p>
-                  Our eLearning services offer customized, interactive courses
-                  to support continuous learning and professional development.
-                  We utilize the latest technologies to deliver engaging and
-                  effective training programs.
-                </p>
-              </div>
-            </Box>
-
-            {/* Services Box 5 */}
-            <Box
-              sx={{
-                margin: "20px",
-                padding: "20px",
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 40px)",
-                  md: "calc(33.33% - 40px)",
-                },
-          backgroundColor: "rgb(213, 216, 195)",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                minWidth: "250px", // Set min-width to ensure a minimum width for service boxes
-              }}
-            >
-              <div {...fadeRightWithOptions()}>
-                <Typography
-                  variant="h6"
-                  color="initial"
-                  sx={{ fontWeight: "bold" }}
-                >
-                   Professional Training
-                </Typography>
-                <p>
-                  We offer professional training programs in data science,
-                  Python & R programming, GIS, and many others subject designed
-                  to equip individuals with essential skills and knowledge. Our
-                  expert instructors ensure a hands-on learning experience.
-                </p>
-              </div>
-            </Box>
-
-            {/* Services Box 6 */}
-            <Box
-              sx={{
-                margin: "20px",
-                padding: "20px",
-                width: {
-                  xs: "100%",
-                  sm: "calc(50% - 40px)",
-                  md: "calc(33.33% - 40px)",
-                },
-          backgroundColor: "rgb(213, 216, 195)",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                minWidth: "250px", // Set min-width to ensure a minimum width for service boxes
-              }}
-            >
-              <div {...fadeLeftWithOptions()}>
-                <Typography
-                  variant="h6"
-                  color="initial"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Event Organization
-                </Typography>
-                <p>
-                  We organize and manage a wide range of events, from workshops
-                  and seminars to conferences and symposiums. Our team ensures
-                  seamless execution to foster networking and knowledge sharing.
-                </p>
-              </div>
-            </Box>
-          </Box>
-        </section>
-
-        {/* ////////////////////////////////////////////////////////////////////////////// */}
-
-        {/* Projects section */}
-        <section style={{ backgroundColor: "rgb(237,241,226)" }}>
-          <Typography variant="h4" color="initial" align="center">
-            Projects
-          </Typography>
-          <p style={{ textAlign: "justify", padding: "10px 40px" }}>
-            At Axon Infotech Research Academy, we are committed to pushing the
-            boundaries of healthcare through groundbreaking research and
-            innovation. Our team of experts is dedicated to exploring the latest
-            advancements in medical technology and data sciences to
-            revolutionize patient care and improve health outcomes.
-          </p>
-
-          {/* Here /////////////////////////////////////////////////// */}
-          <div
-  style={{
-    display: "flex",
-    margin: "40px",
-    gap: "20px",
-    flexWrap: "wrap",
-    justifyContent:"center"
-  }}
->
-  {ProjectData && ProjectData.length > 0 ? (
-    ProjectData.slice(0, 4).map((project) => (
-      <div
-        key={project.id}
-        style={{
-          textAlign: "center",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          overflow: "hidden",
-          width: "280px",
-          cursor: "pointer",
-          transition: "transform 0.2s ease-in-out",
-          ":hover": { transform: "scale(1.05)" },
-        }}
-        onClick={() => navigate(`/projects/${project.id}`)}
-      >
-        <img
-          src={project.image}
-          alt={project.title}
-          style={{
-            width: "100%",
-            height: "auto",
-            objectFit: "cover",
-            borderRadius: "8px 8px 0 0",
-          }}
-        />
-        <div style={{ padding: "16px" }}>
-          <h4>{project.title}</h4>
-          {/* Check if project.description exists before slicing */}
-          <p>{project.description && project.description.slice(0, 80)} ....</p>
-          <p>Date:{project.date}</p>
-
-          <Button variant="contained" size="small">
-            View More
-          </Button>
-        </div>
-      </div>
-    ))
-  ) : (
-    <div>No projects available</div>
-  )}
-</div>
-
-
-
-          <div
-            style={{ display: "flex", justifyContent: "center" }}
-            onClick={() => {
-              navigate("/projects");
-            }}
-          >
-            <Button
-              variant="contained"
-              sx={{ padding: "10px", margin: "20px" }}
-            >
-              View All projects
-            </Button>
-          </div>
-        </section>
-
-        {/* Latest Article or Blogs */}
-
-        <section>
-  <Typography
-    variant="h4"
-    sx={{
-      fontSize: { xs: "24px", sm: "26px", md: "28px", lg: "30px" },
-      fontFamily: "sans-serif",
-      display:"flex"
-      , justifyContent:"center" , padding:"8px"
-    }}
-  >
-    Latest Articles or Blogs
-  </Typography>
-
-  <div
-    style={{
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center", // Center the items horizontally
-      gap: "20px",
-      padding: "20px", // Added padding for better spacing
-      backgroundColor: "rgb(237,241,226)",
-    }}
-  >
-    {BlogData && BlogData.length > 0 ? (
-      BlogData.slice(0, 4).map((blog) => (
-        <div
-          key={blog.id}
-          style={{
-            textAlign: "center",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            overflow: "hidden",
-            width: "280px",
-            cursor: "pointer",
-            transition: "transform 0.2s ease-in-out",
-            ":hover": { transform: "scale(1.05)" },
-          }}
-          onClick={() => navigate(`/blogs/${blog.id}`)}
-        >
-          <img
-            src={blog.image}
-            alt={blog.title}
-            style={{
-              width: "100%",
-              height: "auto",
-              objectFit: "cover",
-              borderRadius: "8px 8px 0 0",
-            }}
-          />
-          <div style={{ padding: "16px" }}>
-            <Typography
-              variant="h5"
-              component="h3"
-              sx={{ marginBottom: "8px", fontSize: "1.2rem" }}
-            >
-              {blog.title}
-            </Typography>
-            <Button variant="contained" size="small">
-              View More
-            </Button>
-          </div>
-        </div>
-      ))
-    ) : (
-      <div>No blogs available</div>
-    )}
-  </div>
-  <div style={{ textAlign: "center", marginTop: "20px" }}>
-    <Button
-      variant="contained"
-      sx={{ padding: "10px", margin: "20px" }}
-      onClick={() => {
-        navigate("/blogs");
-      }}
-    >
-      View All Blogs
-    </Button>
-  </div>
-</section>
-
-
-        {/* Edge IT Solutions [Last Section ] */}
-        
-   
-
-      </section>
+    <Box sx={{ overflowX: 'hidden' }}>
+      <SEO
+        title="Home"
+        description="Axon Infotech Research Academy (AIRA) - Leading health informatics and public health research in Nepal."
+        keywords="Health Informatics, Public Health, Research, Nepal, AI, Data Science"
+      />
+      {/* Hero Section */}
       <Box
-          sx={{
-            // backgroundColor: "#f5f5f5",
-            padding: "10px",
-            textAlign: "center",
-            backgroundColor: "rgb(237,241,226)",
-          }}
-        >
-          <Container maxWidth="lg">
-            <Typography variant="h" component="h2" gutterBottom>
-              Innovating Healthcare with Cutting-Edge IT Solutions
+        sx={{
+          position: 'relative',
+          height: '90vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          color: 'white',
+          textAlign: 'center',
+        }}
+      >
+        <Container maxWidth="md">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 800, letterSpacing: '-0.02em' }}>
+              Innovating Healthcare with Data Science
             </Typography>
-            <Typography
-              variant="body1"
-              component="p"
-              gutterBottom
-              sx={{ fontWeight: "bold" }}
-            >
-              Connect With Us
+            <Typography variant="h5" sx={{ mb: 4, fontWeight: 300, color: 'rgba(255,255,255,0.9)' }}>
+              Axon Infotech Research Academy (AIRA) is dedicated to revolutionizing patient care through cutting-edge technology and research.
             </Typography>
-            <Box >
+            <Box>
               <Button
-                variant="outlined"
-                color="primary"
-                sx={{
-                
-                  "&:hover": { backgroundColor: "#3b5998", color: "#ffffff" },
-                }}
-                href="https://www.facebook.com/people/Axon-Infotech-Research-Academy-AIRA/61560547244349/"
-                target="_blank"
-                rel="noopener noreferrer"
+                variant="contained"
+                color="secondary"
+                size="large"
+                sx={{ mr: 2, px: 4, py: 1.5, fontSize: '1.1rem' }}
+                onClick={() => navigate('/projects')}
               >
-                <FacebookIcon sx={{ marginRight: 1 }} />
-                FaceBook
-              </Button>
-            
-              <Button
-                variant="outlined"
-                color="primary"
-                sx={{
-                  margin: 1,
-                  "&:hover": { backgroundColor: "#0e76a8", color: "#ffffff" },
-                }}
-                href="https://www.linkedin.com/in/airaworld-com-551908312/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkedInIcon sx={{ marginRight: 1 }} />
-                LinkedIn
+                Our Projects
               </Button>
               <Button
                 variant="outlined"
-                color="primary"
-                sx={{
-                  margin: 1,
-                  "&:hover": { backgroundColor: "#c4302b", color: "#ffffff" },
-                }}
-                href="https://www.youtube.com/@airaworld2"
-                target="_blank"
-                rel="noopener noreferrer"
+                color="inherit"
+                size="large"
+                sx={{ px: 4, py: 1.5, fontSize: '1.1rem', borderColor: 'white', color: 'white', '&:hover': { borderColor: 'secondary.main', color: 'secondary.main' } }}
+                onClick={() => navigate('/about')}
               >
-                <YouTubeIcon sx={{ marginRight: 1 }} />
-                YouTube
+                Learn More
               </Button>
             </Box>
-          </Container>
+          </motion.div>
+        </Container>
+      </Box>
+
+      {/* About Section */}
+      <Container maxWidth="lg" sx={{ py: 10 }}>
+        <Grid container spacing={6} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <Typography variant="overline" color="secondary" sx={{ fontWeight: 'bold', letterSpacing: 2 }}>
+                Who We Are
+              </Typography>
+              <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
+                Pioneering Research & Development
+              </Typography>
+              <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', color: 'text.secondary', lineHeight: 1.8 }}>
+                Axon Infotech Research Academy evolved from a community health initiative to a premier research institution. We combine clinical expertise with data-driven innovation to solve complex healthcare challenges.
+              </Typography>
+              <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', color: 'text.secondary', lineHeight: 1.8 }}>
+                Originally established as Rara Medical Hall in 2017, we have grown into AIRA, focusing on the intersection of healthcare technology and data science to serve our community and beyond.
+              </Typography>
+              <Button variant="text" color="primary" endIcon={<ArrowForwardIcon />} onClick={() => navigate('/about')} sx={{ mt: 2, fontSize: '1rem' }}>
+                Read Our Story
+              </Button>
+            </motion.div>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <Box
+                component="img"
+                src="/Images/AboutUs.jpeg"
+                alt="About AIRA"
+                sx={{
+                  width: '100%',
+                  borderRadius: 4,
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                }}
+              />
+            </motion.div>
+          </Grid>
+        </Grid>
+      </Container>
+
+      {/* Services Section */}
+      <Box sx={{ bgcolor: 'rgba(237,241,226, 0.3)', py: 10 }}>
+        <Container maxWidth="lg">
+          <Box textAlign="center" mb={8}>
+            <Typography variant="overline" color="secondary" sx={{ fontWeight: 'bold', letterSpacing: 2 }}>
+              What We Do
+            </Typography>
+            <Typography variant="h3" component="h2" sx={{ fontWeight: 700 }}>
+              Our Core Services
+            </Typography>
+          </Box>
+          <Grid container spacing={4}>
+            {services.map((service, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <ServiceCard {...service} delay={index * 0.1} />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Projects Section */}
+      <Container maxWidth="lg" sx={{ py: 10 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={6}>
+          <Box>
+            <Typography variant="overline" color="secondary" sx={{ fontWeight: 'bold', letterSpacing: 2 }}>
+              Our Work
+            </Typography>
+            <Typography variant="h3" component="h2" sx={{ fontWeight: 700 }}>
+              Featured Projects
+            </Typography>
+          </Box>
+          <Button variant="outlined" onClick={() => navigate('/projects')}>View All</Button>
         </Box>
-    </>
+        <Grid container spacing={4}>
+          {projectsData.slice(0, 3).map((project, index) => (
+            <Grid item xs={12} md={4} key={project.id}>
+              <ContentCard
+                title={project.title}
+                description={project.description}
+                image={project.image}
+                date={project.date}
+                category="Project"
+                onClick={() => navigate(`/ projects / ${project.id} `)}
+                delay={index * 0.1}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* Blogs Section */}
+      <Box sx={{ bgcolor: 'background.default', py: 10 }}>
+        <Container maxWidth="lg">
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={6}>
+            <Box>
+              <Typography variant="overline" color="secondary" sx={{ fontWeight: 'bold', letterSpacing: 2 }}>
+                Insights
+              </Typography>
+              <Typography variant="h3" component="h2" sx={{ fontWeight: 700 }}>
+                Latest Articles
+              </Typography>
+            </Box>
+            <Button variant="outlined" onClick={() => navigate('/blogs')}>View All</Button>
+          </Box>
+          <Grid container spacing={4}>
+            {healthWorkBlogs.slice(0, 3).map((blog, index) => (
+              <Grid item xs={12} md={4} key={blog.id}>
+                <ContentCard
+                  title={blog.title}
+                  description={blog.content[0]} // Use first paragraph as description
+                  image={blog.image}
+                  date={blog.date}
+                  category="Blog"
+                  onClick={() => navigate(`/ blogs / ${blog.id} `)}
+                  delay={index * 0.1}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* CTA Section */}
+      <Box sx={{ py: 10, bgcolor: 'primary.main', color: 'white', textAlign: 'center' }}>
+        <Container maxWidth="md">
+          <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
+            Ready to Collaborate?
+          </Typography>
+          <Typography variant="h6" sx={{ mb: 4, fontWeight: 300, opacity: 0.9 }}>
+            Join us in shaping the future of healthcare technology.
+          </Typography>
+          <Button variant="contained" color="secondary" size="large" onClick={() => navigate('/getintouch')}>
+            Contact Us Today
+          </Button>
+        </Container>
+      </Box>
+    </Box>
   );
 };
+
+
 
 export default Home;
