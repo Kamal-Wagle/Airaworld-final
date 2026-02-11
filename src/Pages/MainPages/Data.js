@@ -278,11 +278,11 @@ export const fallbackImage =
 export const CEO = [
   {
     id: 1,
-    name: "Mr. CM Wagle",
-    post: "CEO",
+    name: "Mrs. Yashoda Dangi",
+    post: "Co-founder",
     introduction: "",
-    Image: "/AdminTeam/Cm Wagle.jpeg",
-    Qualification: "Master in Health  Informatics (Pursuing)",
+    Image: "/AdminTeam/Yashoda.jpeg",
+    Qualification: "Advisor (Health Informatics/ Digital Health) Master in Health Informatics",
   },
 ];
 // Sample data for admin members (Advisory Team)
