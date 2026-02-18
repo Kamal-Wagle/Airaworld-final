@@ -75,8 +75,8 @@ const GetinTouch = () => {
 
   const contactInfo = [
     { icon: <EmailIcon color="primary" />, title: "Email", content: "airaworld1982@gmail.com" },
-    { icon: <PhoneIcon color="primary" />, title: "Phone", content: "+977-9841234567" }, // Placeholder phone, verify if available
-    { icon: <LocationOnIcon color="primary" />, title: "Address", content: "Gatthaghar, Bhaktapur, Nepal" },
+    { icon: <PhoneIcon color="primary" />, title: "Phone", content: "9847834439" }, // Placeholder phone, verify if available
+    { icon: <LocationOnIcon color="primary" />, title: "Address", content: "Mahalaxmi-02, Lalitpur, Nepal" },
   ];
 
   return (
