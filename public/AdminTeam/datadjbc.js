@@ -290,7 +290,7 @@ export const CEO = [
     post: "Hr and Program Head",
     introduction:
       "Sudarsan Dahal is an accomplished professional with over 12 years of extensive experience in the Development sector in Nepal. He specializes in project implementation, management, and administration, with expertise in public-private partnerships, health system strengthening, and capacity building.",
-    Image: "/AdminTeam/Advisor Sudarshan Dahal.jpg", // Placeholder URL
+    photoUrl: " /AdminTeam/Advisor DB Singh.jpg", // Placeholder URL
     Qualification: "MA Sociology, MA Rural Development",
   },
 

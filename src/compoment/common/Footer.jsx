@@ -60,13 +60,13 @@ const Footer = () => {
               Contact Us
             </Typography>
             <Typography variant="body2" sx={{ mb: 1, color: 'grey.400' }}>
-              Lalitpur, Nepal
+             Mahalaxmi-02, Lalitpur, Nepal
             </Typography>
             <Typography variant="body2" sx={{ mb: 1, color: 'grey.400' }}>
               Email: airaworld1982@gmail.com
             </Typography>
             <Typography variant="body2" sx={{ color: 'grey.400' }}>
-              Phone: +977 9841285227
+              Phone: +977 9847834439
             </Typography>
           </Grid>
         </Grid>
